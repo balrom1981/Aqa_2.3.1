@@ -38,74 +38,23 @@ class DeliveryNewTest {
         $("[data-test-id=city] input").setValue(city);
         $("[data-test-id='date'] input")
                 .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        String str = SetNewDate(10);
-        $("[data-test-id='date'] input").setValue(str);
+        $("[data-test-id='date'] input").setValue(SetNewDate(3));
         $("[data-test-id='name'] input").setValue(name);
         $("[data-test-id='phone'] input").setValue(phone);
         $("[data-test-id=agreement]").click();
         $$("button").get(1).click();
-        $(withText("Встреча успешно запланирована на "))
+        $(withText("Встреча успешно"))
                 .shouldBe(visible, Duration.ofSeconds(15));
-        $(withText(str)).shouldBe(visible, Duration.ofSeconds(15));
+        $(withText(SetNewDate(3))).shouldBe(visible);
+        $("[data-test-id='date'] input")
+                .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+        $("[data-test-id='date'] input").setValue(SetNewDate(5));
+        $$("button").get(1).click();
+        $(withText("У вас уже запланирована встреча на другую дату. Перепланировать?"))
+                .shouldBe(visible, Duration.ofSeconds(15));
+        $(withText("Перепланировать")).click();
+        $(withText("Встреча успешно ")).shouldBe(visible);
     }
-
-//    @Test
-//    void shouldRejectInvalidСity() {
-//        $("[data-test-id=city] input").setValue("Сочи");
-//        $("[data-test-id='date'] input")
-//                .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-//        String str = SetNewDate(10);
-//        $("[data-test-id='date'] input").setValue(str);
-//        $("[data-test-id='name'] input").setValue("Иванов Василий");
-//        $("[data-test-id='phone'] input").setValue("+79200000000");
-//        $("[data-test-id=agreement]").click();
-//        $$("button").get(1).click();
-//        $(withText("Доставка в выбранный город недоступна")).shouldBe(visible);
-//    }
-//
-//    @Test
-//    void shouldRejectInvalidName() {
-//        $("[data-test-id=city] input").setValue("Москва");
-//        $("[data-test-id='date'] input")
-//                .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-//        String str = SetNewDate(10);
-//        $("[data-test-id='date'] input").setValue(str);
-//        $("[data-test-id='name'] input").setValue("Rachel");
-//        $("[data-test-id='phone'] input").setValue("+79200000000");
-//        $("[data-test-id=agreement]").click();
-//        $$("button").get(1).click();
-//        $(withText("Имя и Фамилия указаные неверно. " +
-//                "Допустимы только русские буквы, пробелы и дефисы.")).shouldBe(visible);
-//    }
-//
-//    @Test
-//    void shouldRejectInvalidPhone() {
-//        $("[data-test-id=city] input").setValue("Москва");
-//        $("[data-test-id='date'] input")
-//                .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-//        String str = SetNewDate(10);
-//        $("[data-test-id='date'] input").setValue(str);
-//        $("[data-test-id='name'] input").setValue("Иванов Василий");
-//        $("[data-test-id='phone'] input").setValue("89200000000");
-//        $("[data-test-id=agreement]").click();
-//        $$("button").get(1).click();
-//        $(withText("Телефон указан неверно. Должно быть 11 цифр, " +
-//                "например, +79012345678.")).shouldBe(visible);
-//    }
-//
-//    @Test
-//    void shouldRejectEmptyCheckBox() {
-//        $("[data-test-id=city] input").setValue("Москва");
-//        $("[data-test-id='date'] input")
-//                .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-//        String str = SetNewDate(10);
-//        $("[data-test-id='date'] input").setValue(str);
-//        $("[data-test-id='name'] input").setValue("Иванов Василий");
-//        $("[data-test-id='phone'] input").setValue("+79200000000");
-//        $$("button").get(1).click();
-//        $(withText("Я соглашаюсь с условиями обработки и использования " +
-//                "моих персональных данных")).shouldBe(visible);
-//    }
 
 }
 
