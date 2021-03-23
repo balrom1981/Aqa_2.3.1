@@ -30,23 +30,27 @@ class DeliveryNewTest {
         $("[data-test-id=city] input").setValue(DataHelper.getNewCity());
         $("[data-test-id='date'] input")
                 .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").setValue(DataHelper.getNewDate(3));
+        String dateFirst = DataHelper.getNewDate(3);
+        $("[data-test-id='date'] input").setValue(dateFirst);
         $("[data-test-id='name'] input").setValue(DataHelper.getNewName());
         $("[data-test-id='phone'] input").setValue(DataHelper.getNewPhoneNumber());
         $("[data-test-id=agreement]").click();
         $$("button").get(1).click();
-        String dateFirst = $("[data-test-id='date']").getCssValue("value");
-        $(withText("Встреча успешно" + dateFirst))
+        $(withText("Встреча успешно"))
                 .shouldBe(visible, Duration.ofSeconds(15));
+        $(withText(dateFirst))
+                .shouldBe(visible);
         $("[data-test-id='date'] input")
                 .sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").setValue(DataHelper.getNewDate(5));
+        String dateSecond = DataHelper.getNewDate(5);
+        $("[data-test-id='date'] input").setValue(dateSecond);
         $$("button").get(1).click();
-        $(withText("У вас уже запланирована встреча на другую дату. Перепланировать?"))
+        $(withText("У вас уже запланирована встреча на другую дату."))
                 .shouldBe(visible, Duration.ofSeconds(15));
         $(withText("Перепланировать")).click();
-        String dateSecond = $("[data-test-id='date']").getCssValue("value");
-        $(withText("Встреча успешно " + dateSecond)).shouldBe(visible);
+        $(withText("Встреча успешно ")).shouldBe(visible);
+        $(withText(dateSecond)).shouldBe(visible);
+
     }
 
 }
